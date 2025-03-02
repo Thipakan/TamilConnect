@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Enseignant - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="dashboard.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue dans l'espace enseignant</h1>
+        <button id="logout">Déconnexion</button>
+    </header>
+
+    <section>
+        <h2>Déposer un cours</h2>
+        <form id="course-form">
+            <label for="title">Titre du cours :</label>
+            <input type="text" id="title" required>
+
+            <label for="description">Description :</label>
+            <textarea id="description" required></textarea>
+
+            <label for="file">Fichier :</label>
+            <input type="file" id="file" accept=".pdf,.docx" required>
+
+            <button type="submit">Ajouter</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Mes cours</h2>
+        <ul id="courses-list"></ul>
+    </section>
+</body>
+</html>
