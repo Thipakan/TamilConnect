@@ -54,3 +54,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loadCourses();
 });
+
+
+document.getElementById("login-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    
+    const formData = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+    };
+
+    const response = await fetch("http://localhost/tamilconnect/login.php", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+    alert(data.message);
+
+    if (data.success) {
+        // Si l'utilisateur est un enseignant, redirige vers le tableau de bord de l'enseignant
+        if (data.role === "teacher") {
+            window.location.href = "dashboard_enseignant.html"; // Redirige vers l’espace enseignant
+        } else {
+            window.location.href = "espace-client.html"; // Redirige vers l’espace client
+        }
+    }
+});

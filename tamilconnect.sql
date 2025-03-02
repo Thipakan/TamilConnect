@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 23 fév. 2025 à 20:17
+-- Généré le : dim. 02 mars 2025 à 10:42
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `teacherId` int DEFAULT NULL,
+  `pdf_file` blob,
   PRIMARY KEY (`id`),
   KEY `teacherId` (`teacherId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -80,7 +81,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `role`, `createdAt`, `updatedAt`) VALUES
+(1, 'enseignant@tamilconnect.com', '$2y$10$KIX/f8HhVIV/N8kmZq8MeuUQbdZBvOx1G7TQ1rQPSMfJDCN/e0YuK', 'teacher', '2025-03-01 22:11:29', '2025-03-01 22:11:29'),
+(2, 'testuser@example.com', '$2a$10$uE1uFq/O0p8f7yXIk74a4u05mADqUz3gejgxXJZH5yFHK4Ht11vhe', 'student', '2025-03-01 22:37:49', '2025-03-01 22:37:49'),
+(3, 'thipakan12@hotmail.fr', '$2y$10$q4gBeuTFYz286WwZEq.se.C53I6FUfR3zZk11bAY4qb5xK0ZcKZ5u', 'student', '2025-03-02 09:59:43', '2025-03-02 09:59:43'),
+(4, 'thipakan@hotmail.fr', '$2y$10$CRh1k/RCb5FU3YDjk56q5e86mhuaNdB9PaSsIICHjWwmi34MbUW.C', 'student', '2025-03-02 10:08:37', '2025-03-02 10:08:37');
 
 --
 -- Contraintes pour les tables déchargées

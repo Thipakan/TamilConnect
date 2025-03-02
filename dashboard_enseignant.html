@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Enseignant - TamilConnect</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="dashboard.js"></script>
 </head>
+
 <body>
     <header>
         <h1>Bienvenue dans l'espace enseignant</h1>
-        <button id="logout">Déconnexion</button>
+        <nav>
+            <ul>
+                <li><a href="TamilConnect.html">Déconnexion</a></li>
+            </ul>
+        </nav>
     </header>
 
+    <!-- Contenu de la page enseignant -->
     <section>
-        <h2>Déposer un cours</h2>
-        <form id="course-form">
+        <h2>Gérer les cours</h2>
+
+        <!-- Formulaire pour ajouter un cours -->
+        <form action="upload_course.php" method="POST" enctype="multipart/form-data">
             <label for="title">Titre du cours :</label>
-            <input type="text" id="title" required>
+            <input type="text" name="title" id="title" required><br><br>
 
             <label for="description">Description :</label>
-            <textarea id="description" required></textarea>
+            <textarea name="description" id="description" rows="4" cols="50" required></textarea><br><br>
 
-            <label for="file">Fichier :</label>
-            <input type="file" id="file" accept=".pdf,.docx" required>
+            <label for="file">Télécharger le fichier PDF :</label>
+            <input type="file" name="file" id="file" accept=".pdf" required><br><br>
 
-            <button type="submit">Ajouter</button>
+            <button type="submit">Ajouter le cours</button>
         </form>
     </section>
 
-    <section>
-        <h2>Mes cours</h2>
-        <ul id="courses-list"></ul>
-    </section>
+    <footer>
+        <p>&copy; 2025 TamilConnect. Tous droits réservés.</p>
+    </footer>
 </body>
+
 </html>
