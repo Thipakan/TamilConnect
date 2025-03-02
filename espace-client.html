@@ -104,10 +104,11 @@
 
                     // Créer et ajouter le bouton de téléchargement
                     const downloadButton = document.createElement('a');
-                    downloadButton.href = `C:\\wamp64\\www\\TamilConnect\\${course.file}`;  // Assurez-vous que le chemin est correct
+                    downloadButton.href = `http://localhost/TamilConnect/uploads/${course.file}`; // Chemin relatif via HTTP
                     downloadButton.textContent = 'Télécharger le cours';
                     downloadButton.setAttribute('download', course.file); // Attribut pour forcer le téléchargement
                     courseElement.appendChild(downloadButton);
+                   
 
                     // Ajouter l'élément du cours à la page
                     coursesContainer.appendChild(courseElement);
