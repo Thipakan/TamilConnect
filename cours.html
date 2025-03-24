@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours ouverts à tous - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        /*header {
+            background: #8B0000;
+            color: white;
+            padding: 20px;
+        }*/
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            background: white;
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #a52a2a;
+        }
+        .quiz-container {
+            margin-top: 10px;
+        }
+        #quiz-result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .cta {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /*footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #8B0000;
+            color: white;
+        }*/
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>TamilConnect</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="TamilConnect.html">Accueil</a></li>
+                <li><a href="a_propos.html">À propos</a></li>
+                <li><a href="histoire.html">Histoire des Tamouls</a></li>
+                <li><a href="cours.html">Cours</a></li>
+                <li><a href="connexion.html">Se connecter</a></li>
+                <li><a href="inscription.html">S'inscrire</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="intro">
+        <h2>Bienvenue dans nos cours ouverts à tous</h2>
+        <p>Découvrez les bases de la langue tamoule à travers des leçons interactives et des ressources gratuites.</p>
+    </section>
+
+    <section class="alphabet">
+        <h3>📖 Apprendre l'alphabet tamoul</h3>
+        <p>Familiarisez-vous avec les lettres tamoules et leur prononciation.</p>
+        <video width="640" height="360" controls>
+            <source src="video/alphabet tamoul.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas l'élément vidéo.
+        </video>
+        
+        <p><a href="pdf/alphabet_tamoul.pdf" download>📄 Télécharger l'alphabet tamoul en PDF</a></p>
+    </section>
+
+    <section class="quiz">
+        <h3>📝 Petit quiz : Testez vos connaissances</h3>
+        <p>Choisissez la bonne réponse :</p>
+        <div class="quiz-container">
+            <p>Comment dit-on "Bonjour" en tamoul ?</p>
+            <button onclick="checkAnswer(this, 'correct')">Vanakkam</button>
+            <button onclick="checkAnswer(this, 'wrong')">Namaste</button>
+            <button onclick="checkAnswer(this, 'wrong')">Hola</button>
+            
+            <p>Quelle est la langue officielle du Tamil Nadu ?</p>
+            <button onclick="checkAnswer(this, 'correct')">Tamoul</button>
+            <button onclick="checkAnswer(this, 'wrong')">Hindi</button>
+            <button onclick="checkAnswer(this, 'wrong')">Telugu</button>
+            
+            <p>Quel est le script utilisé pour écrire en tamoul ?</p>
+            <button onclick="checkAnswer(this, 'correct')">Tamil script</button>
+            <button onclick="checkAnswer(this, 'wrong')">Devanagari</button>
+            <button onclick="checkAnswer(this, 'wrong')">Latin</button>
+            
+            <p>Quel est un plat typique de la cuisine tamoule ?</p>
+            <button onclick="checkAnswer(this, 'correct')">Idli</button>
+            <button onclick="checkAnswer(this, 'wrong')">Sushi</button>
+            <button onclick="checkAnswer(this, 'wrong')">Tacos</button>
+            
+            <p id="quiz-result"></p>
+        </div>
+    </section>
+
+    <section class="extrait">
+        <h3>🎓 Extrait d'un cours premium</h3>
+        <p>Découvrez un extrait de notre cours pour débutants :</p>
+        <iframe src="pdf/extrait_cours.pdf" width="100%" height="400px"></iframe>
+    </section>
+
+    <section class="cta">
+        <p>📚 Envie d'aller plus loin ? En vous inscrivant, vous accédez à des cours plus avancés et à du contenu exclusif !</p>
+        <p><a href="inscription.html" style="color: #8B0000; text-decoration: underline;">Inscrivez-vous dès maintenant !</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TamilConnect. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function checkAnswer(button, status) {
+            const result = document.getElementById('quiz-result');
+            if (status === 'correct') {
+                result.textContent = "✅ Bonne réponse !";
+                result.style.color = "green";
+            } else {
+                result.textContent = "❌ Mauvaise réponse, essayez encore.";
+                result.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>

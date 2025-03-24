@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Premium - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Bienvenue dans votre espace Premium</h1>
+        <nav>
+            <a href="TamilConnect.html">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Liste des cours Premium</h2>
+        <div id="premium-courses-list">
+            <!-- Les cours premium seront affichés ici avec JS -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TamilConnect - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        async function getPremiumCourses() {
+            try {
+                const userToken = localStorage.getItem("token");
+
+                if (!userToken) {
+                    window.location.href = "connexion.html";
+                    return;
+                }
+
+                const response = await fetch("http://localhost/tamilconnect/get_premium_courses.php", {
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`
+                    }
+                });
+
+                const courses = await response.json();
+                const coursesContainer = document.getElementById("premium-courses-list");
+
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+                        const courseElement = document.createElement('div');
+                        courseElement.classList.add('course');
+
+                        const titleElement = document.createElement('h3');
+                        titleElement.textContent = course.title;
+                        courseElement.appendChild(titleElement);
+
+                        const descriptionElement = document.createElement('p');
+                        descriptionElement.textContent = course.description || "Aucune description disponible.";
+                        courseElement.appendChild(descriptionElement);
+
+                        const downloadButton = document.createElement('a');
+                        downloadButton.href = `http://localhost/TamilConnect/uploads/${course.file}`;
+                        downloadButton.textContent = 'Télécharger le cours';
+                        downloadButton.setAttribute('download', course.file);
+                        courseElement.appendChild(downloadButton);
+
+                        coursesContainer.appendChild(courseElement);
+                    });
+                } else {
+                    coursesContainer.innerHTML = "<p>Aucun cours premium disponible pour le moment.</p>";
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des cours premium:", error);
+            }
+        }
+
+        window.onload = getPremiumCourses;
+    </script>
+</body>
+
+</html>

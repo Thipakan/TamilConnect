@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Client - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Bienvenue dans votre espace client</h1>
+        <nav>
+            <a href="connexion.html">Se connecter</a> |
+            <a href="inscription.html">S'inscrire</a> |
+            <a href="TamilConnect.html">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Liste des cours disponibles</h2>
+        <div id="cours-list">
+            <!-- Les cours seront affichés ici avec JS -->
+        </div>
+    </section>
+
+    <!-- Conteneur de vidéos -->
+    <section class="video-container">
+        <div class="video-item">
+            <h3>Histoire des Tamouls</h3>
+            <video width="360" height="360" controls>
+                <source src="http://localhost/Tamilconnect/video/tamoul%20histoire.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la balise vidéo.
+            </video>
+        </div>
+
+        <div class="video-item">
+            <h3>Musique Tamoule</h3>
+            <video width="360" height="360" controls>
+                <source src="http://localhost/Tamilconnect/video/musique_tamoule.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la balise vidéo.
+            </video>
+        </div>
+    </section>
+
+    <section>
+        <h2>Devenir Premium</h2>
+        <p>Abonnez-vous pour avoir accès à plus de cours et de fonctionnalités.</p>
+        <button id="become-premium-btn">Devenir Premium</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TamilConnect - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Récupération des cours via l'API
+        async function getCourses() {
+            try {
+                const response = await fetch('');
+                const courses = await response.json();
+
+                const coursesContainer = document.getElementById('cours-list');
+
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+                        const courseElement = document.createElement('div');
+                        courseElement.classList.add('course');
+
+                        const titleElement = document.createElement('h3');
+                        titleElement.textContent = course.title;
+                        courseElement.appendChild(titleElement);
+
+                        const descriptionElement = document.createElement('p');
+                        descriptionElement.textContent = course.description || "Aucune description disponible.";
+                        courseElement.appendChild(descriptionElement);
+
+                        const downloadButton = document.createElement('a');
+                        downloadButton.href = `}`;
+                        downloadButton.textContent = 'Télécharger le cours';
+                        downloadButton.setAttribute('download', course.file);
+                        courseElement.appendChild(downloadButton);
+
+                        coursesContainer.appendChild(courseElement);
+                    });
+                } else {
+                    coursesContainer.innerHTML = "<p>Aucun cours disponible pour le moment.</p>";
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des cours:", error);
+            }
+        }
+
+        // Charger les cours lorsque la page est chargée
+        window.onload = getCourses;
+    </script>
+</body>
+
+</html>
+
+<script>
+    // Récupération des cours via l'API
+    async function getCourses() {
+        try {
+            // Effectuer une requête GET vers le fichier PHP
+            const response = await fetch('upload_course.php');
+            const courses = await response.json();
+
+            const coursesContainer = document.getElementById('cours-list');
+
+            if (courses.length > 0) {
+                courses.forEach(course => {
+                    const courseElement = document.createElement('div');
+                    courseElement.classList.add('course');
+
+                    // Créer et ajouter le titre
+                    const titleElement = document.createElement('h3');
+                    titleElement.textContent = course.title;
+                    courseElement.appendChild(titleElement);
+
+                    // Créer et ajouter la description
+                    const descriptionElement = document.createElement('p');
+                    descriptionElement.textContent = course.description || "Aucune description disponible.";
+                    courseElement.appendChild(descriptionElement);
+
+                    // Créer et ajouter le bouton de téléchargement
+                    const downloadButton = document.createElement('a');
+                    downloadButton.href = `http://localhost/TamilConnect/uploads/${course.file}`; // Chemin relatif via HTTP
+                    downloadButton.textContent = 'Télécharger le cours';
+                    downloadButton.setAttribute('download', course.file); // Attribut pour forcer le téléchargement
+                    courseElement.appendChild(downloadButton);
+
+                    // Ajouter l'élément du cours à la page
+                    coursesContainer.appendChild(courseElement);
+                });
+            } else {
+                coursesContainer.innerHTML = "<p>Aucun cours disponible pour le moment.</p>";
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des cours:", error);
+        }
+    }
+
+    // Charger les cours lorsque la page est chargée
+    window.onload = getCourses;
+</script>
+
+<script>
+    document.getElementById('become-premium-btn').addEventListener('click', async function() {
+        const userToken = localStorage.getItem("token");
+
+        if (!userToken) {
+            window.location.href = "connexion.html";
+            return;
+        }
+
+        const response = await fetch("http://localhost/tamilconnect/upgrade_to_premium.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userToken}`,
+            },
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            alert("Félicitations, vous êtes maintenant un utilisateur Premium !");
+            window.location.href = "dashboard_premium.html"; // Redirige vers le tableau de bord premium
+        } else {
+            alert("Une erreur est survenue lors de l'activation de votre compte premium.");
+        }
+    });
+    
+</script>

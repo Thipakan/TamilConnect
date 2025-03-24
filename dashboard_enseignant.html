@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Enseignant - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Fonction de validation pour vérifier qu'on choisit au moins un fichier (PDF ou Vidéo)
+        function validateForm() {
+            var pdfFile = document.getElementById('file').value;
+            var videoFile = document.getElementById('video').value;
+
+            // Si aucun fichier n'est choisi
+            if (pdfFile === "" && videoFile === "") {
+                alert("Vous devez télécharger soit un fichier PDF, soit une vidéo.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Bienvenue dans l'espace enseignant</h1>
+        <nav>
+            <ul>
+                <li><a href="TamilConnect.html">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenu de la page enseignant -->
+    <section>
+        <h2>Gérer les cours</h2>
+
+        <!-- Formulaire pour ajouter un cours -->
+        <form action="upload_course.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <label for="title">Titre du cours :</label>
+            <input type="text" name="title" id="title" required><br><br>
+
+            <label for="description">Description :</label>
+            <textarea name="description" id="description" rows="4" cols="50" required></textarea><br><br>
+
+            <!-- Champ PDF, maintenant optionnel mais valide uniquement si aucun fichier vidéo n'est choisi -->
+            <label for="file">Télécharger un fichier PDF (obligatoire si aucune vidéo) :</label>
+            <input type="file" name="file" id="file" accept=".pdf"><br><br>
+
+            <!-- Champ Vidéo, maintenant optionnel mais valide uniquement si aucun fichier PDF n'est choisi -->
+            <label for="video">Télécharger une vidéo (obligatoire si aucun PDF) :</label>
+            <input type="file" name="video" id="video" accept="video/mp4,video/x-m4v,video/*"><br><br>
+
+            <button type="submit">Ajouter le cours</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TamilConnect. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>
