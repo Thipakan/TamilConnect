@@ -20,6 +20,17 @@
 
             return true;
         }
+
+        // Fonction pour mettre à jour l'action du formulaire en fonction du statut premium
+        function updateFormAction() {
+            var isPremium = document.getElementById('isPremium').checked;
+            var form = document.getElementById('courseForm');
+            if (isPremium) {
+                form.action = "upload_course1.php";  // Cours Premium
+            } else {
+                form.action = "upload_course.php";  // Cours standard
+            }
+        }
     </script>
 </head>
 
@@ -38,7 +49,7 @@
         <h2>Gérer les cours</h2>
 
         <!-- Formulaire pour ajouter un cours -->
-        <form action="upload_course.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form id="courseForm" action="upload_course.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <label for="title">Titre du cours :</label>
             <input type="text" name="title" id="title" required><br><br>
 
@@ -52,6 +63,10 @@
             <!-- Champ Vidéo, maintenant optionnel mais valide uniquement si aucun fichier PDF n'est choisi -->
             <label for="video">Télécharger une vidéo (obligatoire si aucun PDF) :</label>
             <input type="file" name="video" id="video" accept="video/mp4,video/x-m4v,video/*"><br><br>
+
+            <!-- Nouveau champ pour spécifier si le cours est premium -->
+            <label for="isPremium">Cours Premium :</label>
+            <input type="checkbox" name="isPremium" id="isPremium" value="1" onchange="updateFormAction()"><br><br>
 
             <button type="submit">Ajouter le cours</button>
         </form>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Client</title>
+</head>
+<body>
+    <h1>Bienvenue dans votre Dashboard</h1>
+    <h2>Cours Premium</h2>
+    <div id="premium-courses">
+        <!-- Les cours premium seront listés ici -->
+    </div>
+
+    <script>
+        // Vérification du statut premium de l'utilisateur
+        // Dans un vrai projet, cela serait vérifié avec l'API ou les données du serveur
+        const isPremium = true; // Vous devrez remplacer cette condition avec la logique réelle
+
+        if (isPremium) {
+            document.getElementById("premium-courses").innerHTML = `
+                <ul>
+                    <li>Cours 1 Premium</li>
+                    <li>Cours 2 Premium</li>
+                    <li>Cours 3 Premium</li>
+                </ul>
+            `;
+        } else {
+            document.getElementById("premium-courses").innerHTML = `
+                <p>Vous devez vous abonner pour accéder aux cours premium.</p>
+                <a href="abonnement.html">Devenir Premium</a>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -9,6 +9,26 @@
 </head>
 
 <body>
+    <style>.course {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    .premium-course {
+        background-color: #f4f4f4;
+        border: 2px dashed #ff9800;
+        opacity: 0.7;
+    }
+    
+    .premium-message {
+        color: #ff9800;
+        font-weight: bold;
+        text-align: center;
+    }
+    </style>
     <header>
         <h1>Bienvenue dans votre espace client</h1>
         <nav>
@@ -37,19 +57,79 @@
 
         <div class="video-item">
             <h3>Musique Tamoule</h3>
-            <video width="360" height="360" controls>
-                <source src="http://localhost/Tamilconnect/video/musique_tamoule.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la balise vidéo.
-            </video>
+            <p class="video-info">Cette vidéo est payante. Cliquez ci-dessous pour y accéder.</p>
+            
+            <!-- Conteneur vidéo avec un style désactivé -->
+            <div id="video-container" class="video-gray">
+                <video id="video" width="360" height="360" controls disabled>
+                    <source src="http://localhost/Tamilconnect/video/musique_tamoule.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la balise vidéo.
+                </video>
+            </div>
+            
+            <!-- Bouton pour rediriger vers la page de paiement -->
+            <button onclick="redirectToPayment()">Accéder à la vidéo</button>
         </div>
+        
+        <script>
+        function redirectToPayment() {
+            // Rediriger l'utilisateur vers la page de paiement
+            window.location.href = 'paiement.html';
+        }
+        
+        // Cette fonction sera appelée après le paiement pour activer la vidéo
+        function unlockVideo() {
+            var video = document.getElementById('video');
+            var videoContainer = document.getElementById('video-container');
+        
+            // Activer la vidéo et supprimer l'effet gris
+            video.removeAttribute('disabled');
+            videoContainer.style.filter = 'none';
+        }
+        </script>
+        
+        <style>
+        /* Appliquer un filtre gris à la vidéo avant paiement */
+        .video-gray video {
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+        
+        /* Ajouter un peu de style au message */
+        .video-info {
+            font-size: 14px;
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+        
+        /* Style du bouton */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        </style>
+        
     </section>
 
     <section>
         <h2>Devenir Premium</h2>
         <p>Abonnez-vous pour avoir accès à plus de cours et de fonctionnalités.</p>
-        <button id="become-premium-btn">Devenir Premium</button>
+        <!-- Ajouter un lien autour du bouton pour rediriger vers la page d'abonnement -->
+        <a href="abonnement.html">
+            <button id="become-premium-btn">Devenir Premium</button>
+        </a>
     </section>
-
+    
     <footer>
         <p>&copy; 2025 TamilConnect - Tous droits réservés</p>
     </footer>
@@ -102,74 +182,69 @@
 <script>
     // Récupération des cours via l'API
     async function getCourses() {
-        try {
-            // Effectuer une requête GET vers le fichier PHP
-            const response = await fetch('upload_course.php');
-            const courses = await response.json();
+    try {
+        const response = await fetch('http://localhost/tamilconnect/get_courses.php');
 
-            const coursesContainer = document.getElementById('cours-list');
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
 
-            if (courses.length > 0) {
-                courses.forEach(course => {
-                    const courseElement = document.createElement('div');
-                    courseElement.classList.add('course');
+        const courses = await response.json();
+        console.log("Données reçues :", courses); // Debug console
 
-                    // Créer et ajouter le titre
-                    const titleElement = document.createElement('h3');
-                    titleElement.textContent = course.title;
-                    courseElement.appendChild(titleElement);
+        const coursesContainer = document.getElementById('cours-list');
+        coursesContainer.innerHTML = ""; // Nettoyer avant d'afficher
 
-                    // Créer et ajouter la description
-                    const descriptionElement = document.createElement('p');
-                    descriptionElement.textContent = course.description || "Aucune description disponible.";
-                    courseElement.appendChild(descriptionElement);
+        if (courses.length > 0) {
+            courses.forEach(course => {
+                const courseElement = document.createElement('div');
+                courseElement.classList.add('course');
 
-                    // Créer et ajouter le bouton de téléchargement
+                // Ajouter une classe spéciale pour les cours premium
+                if (course.is_premium == 1) {
+                    courseElement.classList.add('premium-course');
+                }
+
+                // Créer et ajouter le titre
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = course.title;
+                courseElement.appendChild(titleElement);
+
+                // Créer et ajouter la description
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = course.description || "Aucune description disponible.";
+                courseElement.appendChild(descriptionElement);
+
+                // Ajouter bouton de téléchargement SI le cours est gratuit
+                if (course.is_premium == 0) {
                     const downloadButton = document.createElement('a');
-                    downloadButton.href = `http://localhost/TamilConnect/uploads/${course.file}`; // Chemin relatif via HTTP
+                    downloadButton.href = `http://localhost/TamilConnect/uploads/${course.file}`;
                     downloadButton.textContent = 'Télécharger le cours';
-                    downloadButton.setAttribute('download', course.file); // Attribut pour forcer le téléchargement
+                    downloadButton.setAttribute('download', course.file);
                     courseElement.appendChild(downloadButton);
+                } else {
+                    // Message indiquant que le cours est premium
+                    const premiumMessage = document.createElement('p');
+                    premiumMessage.textContent = "🔒 Ce cours est réservé aux membres premium.";
+                    premiumMessage.classList.add('premium-message');
+                    courseElement.appendChild(premiumMessage);
+                }
 
-                    // Ajouter l'élément du cours à la page
-                    coursesContainer.appendChild(courseElement);
-                });
-            } else {
-                coursesContainer.innerHTML = "<p>Aucun cours disponible pour le moment.</p>";
-            }
-        } catch (error) {
-            console.error("Erreur lors de la récupération des cours:", error);
-        }
-    }
-
-    // Charger les cours lorsque la page est chargée
-    window.onload = getCourses;
-</script>
-
-<script>
-    document.getElementById('become-premium-btn').addEventListener('click', async function() {
-        const userToken = localStorage.getItem("token");
-
-        if (!userToken) {
-            window.location.href = "connexion.html";
-            return;
-        }
-
-        const response = await fetch("http://localhost/tamilconnect/upgrade_to_premium.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${userToken}`,
-            },
-        });
-
-        const data = await response.json();
-        if (data.success) {
-            alert("Félicitations, vous êtes maintenant un utilisateur Premium !");
-            window.location.href = "dashboard_premium.html"; // Redirige vers le tableau de bord premium
+                // Ajouter l'élément du cours au conteneur
+                coursesContainer.appendChild(courseElement);
+            });
         } else {
-            alert("Une erreur est survenue lors de l'activation de votre compte premium.");
+            coursesContainer.innerHTML = "<p>Aucun cours disponible pour le moment.</p>";
         }
-    });
-    
+    } catch (error) {
+        console.error("Erreur lors de la récupération des cours:", error);
+    }
+}
+
+// Charger les cours au chargement de la page
+window.onload = getCourses;
+
 </script>
+
+
+
