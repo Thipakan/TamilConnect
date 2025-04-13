@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 26 mars 2025 à 19:12
+-- Généré le : dim. 13 avr. 2025 à 21:10
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -81,6 +81,109 @@ INSERT INTO `courses` (`id`, `title`, `description`, `file`, `createdAt`, `updat
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `questions`
+--
+
+DROP TABLE IF EXISTS `questions`;
+CREATE TABLE IF NOT EXISTS `questions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quiz_id` int DEFAULT NULL,
+  `question` text,
+  PRIMARY KEY (`id`),
+  KEY `quiz_id` (`quiz_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `questions`
+--
+
+INSERT INTO `questions` (`id`, `quiz_id`, `question`) VALUES
+(1, 1, 'Quelle est la capitale historique du royaume Chola ?'),
+(2, 2, 'Quelle est la principale caractéristique des voyelles tamoules ?'),
+(3, 2, 'Combien de consonnes existe-t-il en tamoul ?'),
+(4, 3, 'Qui est l’auteur du célèbre poème \"Kamba Ramayanam\" ?'),
+(5, 3, 'Quel est le premier livre écrit par Bharathiyar ?'),
+(6, 4, 'Quel est le festival le plus célébré en Tamoul Nadu ?'),
+(7, 4, 'Qui est la divinité principale dans la culture Tamoule ?');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `quizzes`
+--
+
+DROP TABLE IF EXISTS `quizzes`;
+CREATE TABLE IF NOT EXISTS `quizzes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `quizzes`
+--
+
+INSERT INTO `quizzes` (`id`, `title`) VALUES
+(1, 'Quiz sur l\'Histoire Tamoule'),
+(2, 'Quiz sur la Grammaire Tamoule'),
+(3, 'Quiz sur la Littérature Tamoule'),
+(4, 'Quiz sur la Culture Tamoule');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reponses`
+--
+
+DROP TABLE IF EXISTS `reponses`;
+CREATE TABLE IF NOT EXISTS `reponses` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_id` int DEFAULT NULL,
+  `reponse` text,
+  `is_correct` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `question_id` (`question_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `reponses`
+--
+
+INSERT INTO `reponses` (`id`, `question_id`, `reponse`, `is_correct`) VALUES
+(1, 1, 'Raja Raja Chola', 1),
+(2, 1, 'Ashoka', 0),
+(3, 1, 'Vijayanagar', 0),
+(4, 2, 'La colonisation britannique', 0),
+(5, 2, 'La bataille de Talaiyali', 1),
+(6, 2, 'L\'invasion mongole', 0),
+(7, 3, 'Tamoul', 1),
+(8, 3, 'Hindi', 0),
+(9, 3, 'Anglais', 0),
+(10, 1, 'Raja Raja Chola', 1),
+(11, 1, 'Ashoka', 0),
+(12, 1, 'Vijayanagar', 0),
+(13, 2, 'La colonisation britannique', 0),
+(14, 2, 'La bataille de Talaiyali', 1),
+(15, 2, 'L\'invasion mongole', 0),
+(16, 3, 'Tamoul', 1),
+(17, 3, 'Hindi', 0),
+(18, 3, 'Anglais', 0),
+(19, 2, 'Les voyelles sont de différentes longueurs', 1),
+(20, 2, 'Les voyelles sont toutes de la même longueur', 0),
+(21, 3, '18 consonnes', 0),
+(22, 3, '21 consonnes', 1),
+(23, 4, 'Kamban', 1),
+(24, 4, 'Bharathiyar', 0),
+(25, 5, 'Kuyil Pattu', 0),
+(26, 5, 'Bharathidasan', 1),
+(27, 6, 'Pongal', 1),
+(28, 6, 'Diwali', 0),
+(29, 7, 'Shiva', 1),
+(30, 7, 'Vishnu', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `subscriptions`
 --
 
@@ -125,7 +228,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `role`, `createdAt`, `updatedAt`
 (1, 'enseignant@tamilconnect.com', '$2y$10$KIX/f8HhVIV/N8kmZq8MeuUQbdZBvOx1G7TQ1rQPSMfJDCN/e0YuK', 'teacher', '2025-03-01 22:11:29', '2025-03-01 22:11:29', 'none'),
 (2, 'testuser@example.com', '$2a$10$uE1uFq/O0p8f7yXIk74a4u05mADqUz3gejgxXJZH5yFHK4Ht11vhe', 'student', '2025-03-01 22:37:49', '2025-03-01 22:37:49', 'none'),
 (3, 'thipakan12@hotmail.fr', '$2y$10$q4gBeuTFYz286WwZEq.se.C53I6FUfR3zZk11bAY4qb5xK0ZcKZ5u', 'teacher', '2025-03-02 09:59:43', '2025-03-02 09:59:43', 'none'),
-(4, 'thipakan@hotmail.fr', '$2y$10$CRh1k/RCb5FU3YDjk56q5e86mhuaNdB9PaSsIICHjWwmi34MbUW.C', 'student', '2025-03-02 10:08:37', '2025-03-02 10:08:37', 'none');
+(4, 'thipakan@hotmail.fr', '$2y$10$CRh1k/RCb5FU3YDjk56q5e86mhuaNdB9PaSsIICHjWwmi34MbUW.C', 'student', '2025-03-02 10:08:37', '2025-03-02 10:08:37', 'active');
 
 --
 -- Contraintes pour les tables déchargées
