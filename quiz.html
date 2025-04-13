@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - TamilConnect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- En-tête avec la même couleur que la page d'accueil -->
+    <header>
+        <div class="logo">
+            <h1>TamilConnect - Quiz</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="a_propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Liste des quiz -->
+    <main>
+        <section>
+            <h1>Liste des Quiz</h1>
+            <div id="quiz-list"></div>
+        </section>
+
+        <!-- Section pour afficher les questions du quiz sélectionné -->
+        <section id="quiz-container" style="display:none;">
+            <h2>Quiz en cours</h2>
+            <div id="questions"></div>
+            <div id="timer"></div>
+            <button id="submit-quiz">Soumettre</button>
+        </section>
+    </main>
+
+    <!-- Pied de page avec la même couleur que la page d'accueil -->
+    <footer>
+        <p>&copy; 2025 TamilConnect. Tous droits réservés.</p>
+        <p>Suivez-nous sur <a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Twitter</a>.</p>
+    </footer>
+
+    <script>
+        window.onload = async function () {
+            const response = await fetch('http://localhost/tamilconnect/get_quizzes.php');
+            const data = await response.json();
+
+            if (data.success) {
+                const quizList = document.getElementById("quiz-list");
+                data.quizzes.forEach((quiz) => {
+                    const btn = document.createElement("button");
+                    btn.textContent = quiz.title;
+                    btn.onclick = () => startQuiz(quiz.id);
+                    quizList.appendChild(btn);
+                });
+            }
+        };
+
+        async function startQuiz(quizId) {
+            const response = await fetch(`http://localhost/tamilconnect/get_quiz.php?id=${quizId}`);
+            const quizData = await response.json();
+
+            if (quizData.success && quizData.questions.length > 0) {
+                displayQuestions(quizData.questions);
+            } else {
+                console.error('Erreur de chargement du quiz :', quizData.message || 'Aucune question disponible');
+                alert('Erreur lors du chargement du quiz.');
+            }
+        }
+
+        function displayQuestions(questions) {
+            const quizContainer = document.getElementById("quiz-container");
+            const questionsContainer = document.getElementById("questions");
+            quizContainer.style.display = 'block';
+            questionsContainer.innerHTML = "";
+
+            questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+
+                const questionTitle = document.createElement('h3');
+                questionTitle.textContent = question.question;
+                questionElement.appendChild(questionTitle);
+
+                question.reponses.forEach((answer) => {
+                    const answerElement = document.createElement('label');
+                    answerElement.innerHTML = `
+                        <input type="radio" name="question-${index}" value="${answer.id}">
+                        ${answer.reponse}
+                    `;
+                    questionElement.appendChild(answerElement);
+                });
+
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        document.getElementById("submit-quiz").addEventListener("click", () => {
+            alert("Quiz soumis !");
+            // Logique de soumission du quiz peut être ajoutée ici
+        });
+    </script>
+
+    <style>
+        /* Couleurs et thème global inspiré de TamilConnect */
+        :root {
+            --primary-color: #333;
+            --secondary-color: #3C8D99; 
+            --background-color: #F4F4F9;
+            --text-color: #333;
+            --button-color: #FF8C42;
+            --hover-color: #FF6F61;
+            --accent-color: #FFD700;
+            --border-color: #DDDDDD;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* En-tête avec la couleur de fond adaptée */
+        header {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        main {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #quiz-list {
+            display: flex;
+            flex-direction: row;
+            /*align-items: center;*/
+        }
+
+        button {
+            background-color: var(--button-color);
+            color: white;
+            padding: 12px 25px;
+            /*margin: 10px 0;*/
+            margin-left: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 250px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        #quiz-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+            background-color: #FFF7E6;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .question h3 {
+            color: var(--primary-color);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        #timer {
+            margin-top: 20px;
+            font-size: 20px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        #submit-quiz {
+            background-color: var(--accent-color);
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submit-quiz:hover {
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</body>
+</html>
