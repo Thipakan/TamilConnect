@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "../App.css"; // Assure-toi que ce fichier contient les styles globaux
 
 const Connexion = () => {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,7 +27,7 @@ const Connexion = () => {
       const data = await response.json();
 
       if (data.success) {
-        setMessage("Connexion réussie !");
+        setMessage(t("login_success"));
         setTimeout(() => {
           if (data.role === "teacher") {
             navigate("/dashboard-enseignant");
@@ -29,70 +36,87 @@ const Connexion = () => {
           }
         }, 1000);
       } else {
-        setMessage(data.message || "Erreur d'identifiants.");
+        setMessage(data.message || t("login_error"));
       }
     } catch (error) {
-      setMessage("Erreur de connexion au serveur.");
+      setMessage(t("server_error"));
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white text-gray-800">
-      <h1 className="text-3xl font-bold mb-6">Connexion</h1>
-      <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
-        <div>
-          <label htmlFor="email" className="block mb-1 font-medium">
-            Email :
-          </label>
+    <>
+      {/* Header */}
+      <header>
+        <div className="logo">
+          <h1>TamilConnect</h1>
+          <div className="language-switcher">
+            <button onClick={() => changeLanguage("fr")}>FR</button>
+            <button onClick={() => changeLanguage("en")}>EN</button>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="/accueil">{t("home")}</a></li>
+            <li><a href="/a-propos">{t("about")}</a></li>
+            <li><a href="/histoire">{t("history")}</a></li>
+            <li><a href="/cours">{t("courses")}</a></li>
+            <li><a href="/connexion">{t("login")}</a></li>
+            <li><a href="/inscription">{t("register")}</a></li>
+            <li><a href="/contact">{t("contact")}</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      {/* Formulaire de connexion */}
+      <main className="connexion-container">
+        <h2>{t("login")}</h2>
+        <form onSubmit={handleLogin}>
+          <label>{t("email")} :</label>
           <input
             type="email"
-            id="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border rounded-lg p-2"
           />
-        </div>
 
-        <div>
-          <label htmlFor="password" className="block mb-1 font-medium">
-            Mot de passe :
-          </label>
+          <label>{t("password")} :</label>
           <input
             type="password"
-            id="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border rounded-lg p-2"
           />
-        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          Se connecter
-        </button>
+          <button type="submit">{t("submit")}</button>
 
-        {message && (
-          <p
-            className={`text-center font-medium ${
-              message.includes("réussie") ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
-        )}
-      </form>
+          {message && (
+            <p
+              className={`message ${
+                message.includes(t("login_success"))
+                  ? "success-message"
+                  : "error-message"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+        </form>
 
-      <p className="mt-4">
-        Pas encore inscrit ?{" "}
-        <a href="/inscription" className="text-blue-600 hover:underline">
-          Créez un compte
-        </a>
-      </p>
-    </div>
+        <p className="register-link">
+          {t("not_registered")}{" "}
+          <a href="/inscription">{t("create_account")}</a>
+        </p>
+      </main>
+
+      {/* Footer */}
+      <footer>
+        <p>&copy; 2025 TamilConnect. {t("all_rights_reserved")}</p>
+        <p>
+          {t("follow_us")}{" "}
+          <a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Twitter</a>.
+        </p>
+      </footer>
+    </>
   );
 };
 

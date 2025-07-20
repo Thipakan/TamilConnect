@@ -483,6 +483,104 @@ footer a:hover {
 
 
 
+
+
+.connexion-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  background: #fff;
+  padding: 2.5rem 3rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: left;
+}
+
+.connexion-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.connexion-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.connexion-container label {
+  font-weight: 600;
+  color: #555;
+}
+
+.connexion-container input {
+  padding: 0.8rem 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.connexion-container input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.connexion-container button {
+  background-color: #3498db;
+  color: white;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.connexion-container button:hover {
+  background-color: #2980b9;
+}
+
+.message {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.success-message {
+  color: green;
+}
+
+.error-message {
+  color: red;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.register-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
 /* Responsive design pour les petites écrans */
 @media screen and (max-width: 768px) {
     .hero h2 {
@@ -518,6 +616,6 @@ footer a:hover {
     padding: 2rem 1.5rem;
     width: auto;
   }
-  
+
 }
 

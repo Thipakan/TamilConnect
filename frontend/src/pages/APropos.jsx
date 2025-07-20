@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import "../App.css"; // adapte le chemin si besoin
 
 const APropos = () => {

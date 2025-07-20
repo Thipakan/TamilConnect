@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from "react-i18next";
 import "../App.css"; // ou 'styles.css' selon l’emplacement
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
