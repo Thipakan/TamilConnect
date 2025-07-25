@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
-require_once 'connexion.php'; // change ce nom si ton fichier est ailleurs
+require_once 'config.php'; // change ce nom si ton fichier est ailleurs
 
 $userId = $_GET['user_id'] ?? null;
 

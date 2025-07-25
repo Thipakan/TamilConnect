@@ -14,6 +14,7 @@ const Accueil = () => {
           <ul>
             <li><a href="/accueil">Accueil</a></li>
             <li><a href="/a-propos">À propos</a></li>
+            <li><a href="/mémoire">Mémoire</a></li>
             <li><a href="/histoire">Histoire des Tamouls</a></li>
             <li><a href="/cours">Cours</a></li>
             <li><a href="/connexion">Se connecter</a></li>

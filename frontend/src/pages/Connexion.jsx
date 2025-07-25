@@ -27,6 +27,11 @@ const Connexion = () => {
       const data = await response.json();
 
       if (data.success) {
+
+         // ✅ Stocker dans le localStorage
+  localStorage.setItem("user", JSON.stringify(data.user));
+
+  
         setMessage(t("login_success"));
         setTimeout(() => {
           if (data.role === "teacher") {

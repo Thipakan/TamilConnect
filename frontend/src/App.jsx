@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Accueil from "./pages/Accueil";
 import APropos from "./pages/APropos";
+import Memoire from "./pages/Memoire";
 import Histoire from "./pages/Histoire";
 import Cours from "./pages/Courspublic";
 import Contact from "./pages/Contact";
@@ -17,6 +18,11 @@ import Profil from "./pages/espace-client/Profil";
 import Abonnement from "./pages/espace-client/Abonnement";
 import Quiz from "./pages/espace-client/Quiz";
 import PrivateRoute from "./utils/PrivateRoute";
+import CoursDetail from "./pages/CoursDetail";
+import ChapitreDetail from "./pages/ChapitreDetail";
+
+
+
 
 
 
@@ -28,7 +34,10 @@ function App() {
         <Route path="/accueil" element={<Accueil />} />
         <Route path="/a-propos" element={<APropos />} />
         <Route path="/histoire" element={<Histoire />} />
+        <Route path="/mémoire" element={<Memoire />} />
         <Route path="/cours" element={<Cours />} />
+        <Route path="/cours/:id" element={<CoursDetail />} />
+        <Route path="/cours/:id/:chapterId" element={<ChapitreDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/connexion" element={<Connexion />} />
@@ -36,6 +45,7 @@ function App() {
         <Route path="/espace-client" element={<EspaceClient />} />
         <Route path="/dashboard-premium" element={<DashboardPremium />} />
         <Route path="/espace-client" element={<LayoutClient />}>
+
   <Route index element={<Dashboard />} />
   <Route path="cours" element={<CoursClient />} />
   <Route path="profil" element={<Profil />} />

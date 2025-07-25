@@ -1,6 +1,6 @@
 <?php
 // ✅ Headers CORS à ajouter AVANT toute sortie
-header("Access-Control-Allow-Origin: *"); // Remplace * par http://localhost:3000 si tu veux être plus strict
+header("Access-Control-Allow-Origin: *"); 
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
@@ -41,7 +41,8 @@ if ($user && password_verify($password, $user['password'])) {
     echo json_encode([
         'success' => true,
         'message' => 'Connexion réussie.',
-        'role' => $user['role']
+        'role' => $user['role'],
+        'user' => $user // 👈 On renvoie tout l'utilisateur ici
     ]);
 } else {
     echo json_encode([

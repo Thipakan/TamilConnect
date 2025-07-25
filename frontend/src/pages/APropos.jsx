@@ -45,6 +45,17 @@ const APropos = () => {
           Nous nous engageons à offrir une plateforme web intuitive, accessible et adaptée à tous les apprenants, y compris ceux en situation de handicap.
           Nos cours interactifs intègrent des éléments culturels forts pour permettre une immersion complète dans la richesse de la langue tamoule.
         </p>
+        <p>
+          Nous souhaitons également remercier profondément les pays qui ont accueilli les Tamouls avec bienveillance durant les périodes les plus sombres de leur histoire. 
+          Grâce à la France, au Canada, au Royaume-Uni, à l’Allemagne, à la Suisse et à bien d’autres, des milliers de familles ont pu reconstruire une vie, éduquer leurs enfants 
+          et faire vivre leur langue loin de leur terre natale.
+        </p>
+        <p>
+          Quelle que soit son origine, apprendre une langue, c’est toujours un geste d’ouverture et de paix. C’est découvrir une autre manière de penser, de rêver, de ressentir. 
+          Chez TamilConnect, nous croyons que chaque langue est précieuse, car elle porte en elle des émotions, des histoires et des valeurs humaines. Le tamoul ne fait pas exception. 
+          Apprendre cette langue, c’est aussi apprendre à connaître un peuple, son courage, sa poésie et son espoir.
+        </p>
+
       </section>
 
       {/* Accessibilité */}
